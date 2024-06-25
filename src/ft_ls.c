@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:48:57 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/25 05:39:51 by bammar           ###   ########.fr       */
+/*   Updated: 2024/06/25 20:32:02 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,29 @@ int	ls(char *path, int flags)
 	return (0);
 }
 
+static int	init_args(t_ls_args *args)
+{
+	ft_bzero(args, sizeof(t_ls_args));
+	args->files = ft_dqnew();
+	if (!args->files)
+		return (0);
+	return (1);
+}
+
 int	main(int argc, char **argv)
 {
-	char	path[PATH_MAX + 1];
+	t_ls_args	args;
 
+	if (!init_args(&args))
+		return (ft_putendl_fd("ft_ls: No memory", 2), 1);
 	if (argc == 1)
 		return (ls(".", 0));
-	if (ft_strlen(argv[1]) > PATH_MAX)
-	{
-		perror("ft_ls");
-		return (1);
+	if (parse(argc, argv, &args) < 0)
+		return (ft_dqdel(args.files, 0), 1);
+	t_dlist *current = args.files->head;
+	while (current) {
+		ft_printf("{%s}\n", current->content);
+		current = current->next;
 	}
-	ft_strlcpy(path, argv[1], PATH_MAX); // should be handled in a loop for multiple arguments
-	return (ls(path, ALL | LONG));
+	return (ft_dqdel(args.files, 0), 0);
 }

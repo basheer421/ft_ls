@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:45:54 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/25 05:19:52 by bammar           ###   ########.fr       */
+/*   Updated: 2024/06/25 19:28:57 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,15 @@ typedef enum s_flags
 	RECURSIVE = 4,
 	REVERSE = 8,
 	TIME = 16
-}	t_flags;
+}	t_flag;
+
+typedef struct s_ls_args
+{
+	t_dq	*files;
+	int		flags;
+}	t_ls_args;
+
+int		parse_flags(char *arg);
+int		parse(int argc, char **argv, t_ls_args *args);
 
 #endif
