@@ -1,0 +1,13 @@
+# Compiled object files
+*.o
+
+# Executables
+a.out
+
+# Compiled dynamic libraries
+*.so
+
+# Compiled static libraries
+*.a
+
+.vscode
