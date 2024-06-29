@@ -6,7 +6,7 @@
 #    By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/23 18:39:59 by bammar            #+#    #+#              #
-#    Updated: 2024/06/30 03:19:37 by bammar           ###   ########.fr        #
+#    Updated: 2024/06/30 03:33:27 by bammar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = ft_ls
 
 FILES_DIR = src
 
-FILES = ft_ls.c parse.c parse_flags.c file_type.c
+FILES = ft_ls.c parse.c parse_flags.c file_type.c sort_files.c
 
 LIBFT_DIR = ./lib/libft
 

@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:48:57 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/30 03:21:45 by bammar           ###   ########.fr       */
+/*   Updated: 2024/06/30 03:35:08 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ls(char *path, int flags, int print_dir_name, int origin)
 	files = get_files(path);
 	if (!files)
 		return (1);
-	// sort_files(&files, flags);
+	sort_files(&files, flags);
 	if (!origin && print_dir_name)
 		ft_printf("\n");
 	if (print_dir_name && path[0])
@@ -76,7 +76,7 @@ int	ls(char *path, int flags, int print_dir_name, int origin)
 		if (file->name[0] != '.' || (flags & ALL))
 			ft_printf("%s", file->name);
 		if (current->next && (file->name[0] != '.' || (flags & ALL)))
-			ft_printf(" ");
+			ft_printf("  ");
 		else if (file->name[0] != '.' || (flags & ALL))
 			ft_printf("\n");
 		current = current->next;
