@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 19:26:43 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/25 20:31:31 by bammar           ###   ########.fr       */
+/*   Updated: 2024/06/30 02:52:31 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	parse(int argc, char **argv, t_ls_args *args)
 		}
 		else
 		{
-			file_node = ft_dlstnew(argv[i]);
+			file_node = ft_dlstnew(ft_strdup(argv[i]));
 			if (!file_node)
 				return (ft_putendl_fd("ft_ls: No memory", 2), -1);
 			ft_dqadd_last(args->files, file_node);

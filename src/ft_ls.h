@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:45:54 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/25 19:28:57 by bammar           ###   ########.fr       */
+/*   Updated: 2024/06/27 02:14:08 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@
 # define PATH_MAX 4096
 #endif
 
+// #ifndef DT_DIR
+// # define DT_DIR 4
+// #endif
+
 typedef enum s_flags
 {
 	ALL = 1,
@@ -36,6 +40,12 @@ typedef struct s_ls_args
 	t_dq	*files;
 	int		flags;
 }	t_ls_args;
+
+typedef struct s_file
+{
+	char	*name;
+	int		is_dir;
+}	t_file;
 
 int		parse_flags(char *arg);
 int		parse(int argc, char **argv, t_ls_args *args);
