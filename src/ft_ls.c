@@ -6,48 +6,11 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:48:57 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/30 03:16:17 by bammar           ###   ########.fr       */
+/*   Updated: 2024/06/30 03:21:45 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-static void		destroy_file(void *file)
-{
-	if (!file)
-		return ;
-	free(((t_file *)file)->name);
-	free(file);
-}
-
-static int	has_recursion(char *name)
-{
-	if (name[0] == '.')
-	{
-		if (name[1] == '\0')
-			return (0);
-		if (name[1] == '.' && name[2] == '\0')
-			return (0);
-	}
-	return (1);
-}
-
-static char	*join_path(char *path, char *name)
-{
-	char	*ret;
-	size_t	path_len;
-	size_t	name_len;
-
-	path_len = ft_strlen(path);
-	name_len = ft_strlen(name);
-	ret = ft_malloc(path_len + name_len + 2);
-	if (!ret)
-		exit(EXIT_FAILURE);
-	ft_strlcpy(ret, path, path_len + 1);
-	ft_strlcpy(ret + path_len, "/", 2);
-	ft_strlcpy(ret + path_len + 1, name, name_len + 1);
-	return (ret);
-}
 
 /**
  * Logic for ls:
@@ -101,7 +64,6 @@ int	ls(char *path, int flags, int print_dir_name, int origin)
 	files = get_files(path);
 	if (!files)
 		return (1);
-	// print_raw_files(files);
 	// sort_files(&files, flags);
 	if (!origin && print_dir_name)
 		ft_printf("\n");
@@ -125,7 +87,7 @@ int	ls(char *path, int flags, int print_dir_name, int origin)
 		while (current)
 		{
 			file = current->content;
-			if (file->is_dir && has_recursion(file->name))
+			if (file->is_dir && has_recursion(file->name, flags))
 				ls(join_path(path, file->name), flags, 1, 0);
 			current = current->next;
 		}

@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:45:54 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/27 02:14:08 by bammar           ###   ########.fr       */
+/*   Updated: 2024/06/30 03:21:59 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,8 @@ typedef struct s_file
 
 int		parse_flags(char *arg);
 int		parse(int argc, char **argv, t_ls_args *args);
+void    destroy_file(void *file);
+int 	has_recursion(char *name, int flags);
+char    *join_path(char *path, char *name);
 
 #endif
