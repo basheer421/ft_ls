@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:45:54 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/30 03:32:59 by bammar           ###   ########.fr       */
+/*   Updated: 2024/06/30 04:25:50 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <dirent.h>
 # include <limits.h>
+# include <string.h>
 
 #ifndef PATH_MAX
 # define PATH_MAX 4096
@@ -53,5 +54,6 @@ void    destroy_file(void *file);
 int 	has_recursion(char *name, int flags);
 char    *join_path(char *path, char *name);
 void	sort_files(t_list **files, int flags);
+void    sort_args(t_ls_args *args);
 
 #endif

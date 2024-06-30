@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 19:26:43 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/30 02:52:31 by bammar           ###   ########.fr       */
+/*   Updated: 2024/06/30 04:25:44 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	parse(int argc, char **argv, t_ls_args *args)
 			ft_dqadd_last(args->files, file_node);
 		}
 	}
+	sort_args(args);
 	args->flags = flags;
 	return (0);
 }

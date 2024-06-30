@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 19:16:28 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/25 20:30:05 by bammar           ###   ########.fr       */
+/*   Updated: 2024/06/30 04:08:57 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,16 @@ int	parse_flags(char *arg)
 {
 	int	i;
 	int	flags;
+	int	flag;
 
 	i = -1;
 	flags = 0;
 	while (arg[++i])
 	{
-		flags |= get_flag(arg[i]);
-		if (!flags)
+		flag = get_flag(arg[i]);
+		if (!flag)
 			return (-1);
+		flags |= flag;
 	}
 	return (flags);
 }
