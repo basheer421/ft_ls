@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:48:57 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/30 20:00:25 by bammar           ###   ########.fr       */
+/*   Updated: 2024/06/30 20:16:23 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static t_list	*get_files(char *path)
 	t_list			*files;
 	t_file			*file;
 	t_list			*ret;
+	char			*full_path;
 
 	dir = opendir(path);
 	if (!dir)
@@ -45,8 +46,10 @@ static t_list	*get_files(char *path)
 		file->name = ft_strdup(entry->d_name);
 		if (!file->name)
 			exit(EXIT_FAILURE);
-		if (lstat(join_path(path, file->name), &file->stats) < 0)
+		full_path = join_path(path, file->name);
+		if (lstat(full_path, &file->stats) < 0)
 			exit(EXIT_FAILURE);
+		free(full_path);
 		ft_lstadd_back(&files, ft_lstnew(file));
 		entry = readdir(dir);
 	}
@@ -123,6 +126,7 @@ void	print_long(t_file *file)
 		stats->st_nlink,
 		getpwuid(stats->st_uid)->pw_name, getgrgid(stats->st_gid)->gr_name,
 		(unsigned int)stats->st_size, time_str, file->name);
+	free(time_str);
 	print_origin_if_link(file, file_type == 'l');
 }
 
