@@ -6,11 +6,24 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 19:26:43 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/30 04:25:44 by bammar           ###   ########.fr       */
+/*   Updated: 2024/06/30 19:02:30 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+static void	add_dot_if_empty(t_ls_args *args)
+{
+	t_dlist	*dot;
+
+	if (args->files->head == NULL)
+	{
+		dot = ft_dlstnew(ft_strdup("."));
+		if (!dot)
+			exit(EXIT_FAILURE);
+		ft_dqadd_last(args->files, dot);
+	}
+}
 
 int	parse(int argc, char **argv, t_ls_args *args)
 {
@@ -37,6 +50,7 @@ int	parse(int argc, char **argv, t_ls_args *args)
 		}
 	}
 	sort_args(args);
+	add_dot_if_empty(args);
 	args->flags = flags;
 	return (0);
 }
