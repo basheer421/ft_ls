@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:48:57 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/30 05:13:46 by bammar           ###   ########.fr       */
+/*   Updated: 2024/06/30 05:49:45 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,85 @@ static t_list	*get_files(char *path)
 	return (ret);
 }
 
+char	get_file_type(struct stat *stats)
+{
+	if (S_ISREG(stats->st_mode))
+		return ('-');
+	if (S_ISDIR(stats->st_mode))
+		return ('d');
+	if (S_ISCHR(stats->st_mode))
+		return ('c');
+	if (S_ISBLK(stats->st_mode))
+		return ('b');
+	if (S_ISFIFO(stats->st_mode))
+		return ('p');
+	if (S_ISLNK(stats->st_mode))
+		return ('l');
+	if (S_ISSOCK(stats->st_mode))
+		return ('s');
+	return ('-');
+
+}
+
+char	get_mode(int mode, char letter)
+{
+	if (mode & letter)
+		return (letter);
+	return ('-');
+}
+
+void	print_long(t_file *file)
+{
+	struct stat	stats;
+	char		*path;
+	char		*time_str;
+
+	path = join_path(".", file->name);
+	if (lstat(path, &stats) < 0)
+		exit(EXIT_FAILURE);
+	free(path);
+	time_str = ft_strtrim(ctime(&stats.st_mtime) + 4, "\n");
+	if (!time_str)
+		exit(EXIT_FAILURE);
+	ft_printf("%c%c%c%c%c%c%c%c%c%c %d %s %s  %u %s %s",
+		get_file_type(&stats),
+		get_mode((stats.st_mode & S_IRUSR), 'r'),
+		get_mode((stats.st_mode & S_IWUSR), 'w'),
+		get_mode((stats.st_mode & S_IXUSR), 'x'),
+		get_mode((stats.st_mode & S_IRGRP), 'r'),
+		get_mode((stats.st_mode & S_IWGRP), 'w'),
+		get_mode((stats.st_mode & S_IXGRP), 'x'),
+		get_mode((stats.st_mode & S_IROTH), 'r'),
+		get_mode((stats.st_mode & S_IWOTH), 'w'),
+		get_mode((stats.st_mode & S_IXOTH), 'x'),
+		(unsigned int)stats.st_nlink, // unsigned int for now
+		getpwuid(stats.st_uid)->pw_name, getgrgid(stats.st_gid)->gr_name,
+		stats.st_size, time_str, file->name);
+}
+
+void	print_file(t_file *file, int flags, int is_last)
+{
+
+	if (file->name[0] != '.' || (flags & ALL))
+	{
+		if (flags & LONG)
+			print_long(file);
+		else
+			ft_printf("%s", file->name);
+	}
+	if (!is_last && (file->name[0] != '.' || (flags & ALL)))
+	{
+		if (flags & LONG)
+			ft_printf("\n");
+		else
+			ft_printf("  ");
+	}
+	else if (file->name[0] != '.' || (flags & ALL))
+	{
+		ft_printf("\n");
+	}
+}
+
 int	ls(char *path, int flags, int print_dir_name, int origin, int ret)
 {
 	t_list	*files;
@@ -73,12 +152,7 @@ int	ls(char *path, int flags, int print_dir_name, int origin, int ret)
 	while (current)
 	{
 		file = current->content;
-		if (file->name[0] != '.' || (flags & ALL))
-			ft_printf("%s", file->name);
-		if (current->next && (file->name[0] != '.' || (flags & ALL)))
-			ft_printf("  ");
-		else if (file->name[0] != '.' || (flags & ALL))
-			ft_printf("\n");
+		print_file(file, flags, !current->next);
 		current = current->next;
 	}
 	if (flags & RECURSIVE)
@@ -113,12 +187,9 @@ int	main(int argc, char **argv)
 		return (ft_putendl_fd("ft_ls: No memory", 2), EXIT_FAILURE);
 	ret = 0;
 	if (argc == 1)
-	{
-		ls(ft_strdup("."), 0, 0, 1, 0);
-		return (ft_dqdel(args.files, 0), 0);
-	}
+		return (ft_dqdel(args.files, 0), ls(ft_strdup("."), 0, 0, 1, 0));
 	if (parse(argc, argv, &args) < 0)
-		return (ft_dqdel(args.files, free), 1);
+		return (ft_dqdel(args.files, free), 2);
 	t_dlist *current = args.files->head;
 	while (current) {
 		ret = ls(ft_strdup(current->content), args.flags, (ft_lstsize((t_list *)args.files->head) > 1)
