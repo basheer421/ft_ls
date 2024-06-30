@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:45:54 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/30 05:39:40 by bammar           ###   ########.fr       */
+/*   Updated: 2024/06/30 19:53:23 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ typedef struct s_ls_args
 
 typedef struct s_file
 {
-	char	*name;
-	int		is_dir;
+	char		*name;
+	struct stat	stats;
 }	t_file;
 
 int		parse_flags(char *arg);
