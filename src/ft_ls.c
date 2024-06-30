@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:48:57 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/30 04:20:04 by bammar           ###   ########.fr       */
+/*   Updated: 2024/06/30 05:13:46 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,15 @@ static t_list	*get_files(char *path)
 	return (ret);
 }
 
-int	ls(char *path, int flags, int print_dir_name, int origin)
+int	ls(char *path, int flags, int print_dir_name, int origin, int ret)
 {
 	t_list	*files;
 	t_list	*current;
 	t_file	*file;
 
 	files = get_files(path);
-	if (!files)
-		return (ft_lstclear(&files, destroy_file), free(path), 1);
+	if (!files || ret)
+		ret = 1;
 	sort_files(&files, flags);
 	if (!origin && print_dir_name)
 		ft_printf("\n");
@@ -88,11 +88,11 @@ int	ls(char *path, int flags, int print_dir_name, int origin)
 		{
 			file = current->content;
 			if (file->is_dir && has_recursion(file->name, flags))
-				ls(join_path(path, file->name), flags, 1, 0);
+				ret = ls(join_path(path, file->name), flags, 1, 0, ret);
 			current = current->next;
 		}
 	}
-	return (ft_lstclear(&files, destroy_file), free(path), 0);
+	return (ft_lstclear(&files, destroy_file), free(path), ret);
 }
 
 static int	init_args(t_ls_args *args)
@@ -114,16 +114,15 @@ int	main(int argc, char **argv)
 	ret = 0;
 	if (argc == 1)
 	{
-		ls(ft_strdup("."), 0, 0, 1);
+		ls(ft_strdup("."), 0, 0, 1, 0);
 		return (ft_dqdel(args.files, 0), 0);
 	}
 	if (parse(argc, argv, &args) < 0)
 		return (ft_dqdel(args.files, free), 1);
 	t_dlist *current = args.files->head;
 	while (current) {
-		if (ls(ft_strdup(current->content), args.flags, (ft_lstsize((t_list *)current) > 1)
-			|| (args.flags & RECURSIVE), 1))
-			ret = 2;
+		ret = ls(ft_strdup(current->content), args.flags, (ft_lstsize((t_list *)args.files->head) > 1)
+			|| (args.flags & RECURSIVE), current == args.files->head, ret);
 		current = current->next;
 	}
 	return (ft_dqdel(args.files, free), ret);
