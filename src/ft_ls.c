@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:48:57 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/01 22:28:55 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/01 23:27:56 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,22 @@
  * 	after printing the files go through the dir ones and apply the same function to them.
  * 	Store visited dirs to prevent errors.
  */
+
+static t_list	*try_single_file(char *path)
+{
+	t_file	*file;
+
+	file = ft_malloc(sizeof(t_file));
+	file->name = ft_strdup(path);
+	if (!file->name)
+		exit(EXIT_FAILURE);
+	if (lstat(path, &file->stats) < 0)
+		exit(EXIT_FAILURE);
+	file->full_path = ft_strdup(path);
+	if (!file->full_path)
+		exit(EXIT_FAILURE);
+	return (ft_lstnew(file));
+}
 
 /**
  * Return a linked list of t_files from the current path
@@ -39,7 +55,7 @@ static t_list	*get_files(char *path)
 		return (NULL);
 	dir = opendir(path);
 	if (!dir)
-		return (perror("ft_ls"), NULL);
+		return (try_single_file(path));
 	files = ft_lstnew(NULL);
 	entry = readdir(dir);
 	while (entry)
@@ -101,6 +117,16 @@ static unsigned int	get_total_blocks(t_list *files)
 	return (total / 2);
 }
 
+static int	is_single_file(t_list *files)
+{
+	if (ft_lstsize(files) == 1)
+	{
+		if (!S_ISDIR(((t_file *)files->content)->stats.st_mode))
+			return (1);
+	}
+	return (0);
+}
+
 int	ls(char *path, int flags, int print_dir_name, int origin, int ret)
 {
 	t_list	*files;
@@ -115,9 +141,15 @@ int	ls(char *path, int flags, int print_dir_name, int origin, int ret)
 	sort_files(&files, flags);
 	if (!origin && print_dir_name)
 		ft_printf("\n");
-	if (print_dir_name && path[0])
+	if (is_single_file(files))
+	{
+		file = files->content;
+		print_file(file, flags, 1, max_len);
+		return (ft_lstclear(&files, destroy_file), free(path), ret);
+	}
+	if (print_dir_name)
 		ft_printf("%s:\n", path);
-	if (flags & LONG)
+	if ((flags & LONG))
 		ft_printf("total %u\n", get_total_blocks(files));
 	current = files;
 	while (current)
