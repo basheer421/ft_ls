@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:45:54 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/01 21:56:41 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/02 02:55:54 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@
 # include <grp.h>
 # include <time.h>
 
-#ifndef PATH_MAX
+# ifndef PATH_MAX
+
 # define PATH_MAX 4096
-#endif
+
+# endif
 
 // #ifndef DT_DIR
 // # define DT_DIR 4
@@ -53,16 +55,28 @@ typedef struct s_file
 	char		*full_path;
 }	t_file;
 
-int		parse_flags(char *arg);
-int		parse(int argc, char **argv, t_ls_args *args);
-void    destroy_file(void *file);
-int 	has_recursion(char *name, int flags);
-char    *join_path(char *path, char *name);
-void	sort_files(t_list **files, int flags);
-void    sort_args(t_ls_args *args);
-char	get_file_type(struct stat *stats);
-void	print_long(t_file *file, int max_len);
-int		get_max_len(t_list *files);
-int 	get_len(long n);
+typedef struct s_settings
+{
+	int		print_dir;
+	int		origin;
+	int		ret;
+}	t_settings;
+
+int				parse_flags(char *arg);
+int				parse(int argc, char **argv, t_ls_args *args);
+void			destroy_file(void *file);
+int				has_recursion(t_file *file, int flags);
+char			*join_path(char *path, char *name);
+void			sort_files(t_list **files, int flags);
+char			get_file_type(struct stat *stats);
+void			print_long(t_file *file, int max_len);
+int				get_max_len(t_list *files);
+int				get_len(long n);
+t_list			*get_files(char *path);
+void			print_file(t_file *file, int flags, int is_last, int max_len);
+unsigned int	get_total_blocks(t_list *files);
+int				handle_single_file(t_list *files,
+					int flags, int max_len, char *path);
+int				ls(char *path, int flags, t_settings s);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 03:18:38 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/01 22:03:41 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/02 02:09:06 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,13 @@ void    destroy_file(void *file)
 	free(file);
 }
 
-int has_recursion(char *name, int flags)
+int	has_recursion(t_file *file, int flags)
 {
+	char *name;
+
+	name = file->name;
+	if (!(S_ISDIR(file->stats.st_mode)))
+		return (0);
 	if (name[0] == '.')
 	{
         if (!(flags & ALL))
