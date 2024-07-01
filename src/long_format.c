@@ -6,20 +6,20 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:34:13 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/01 23:10:07 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/02 03:06:14 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static char get_mode(int mode, char letter)
+static char	get_mode(int mode, char letter)
 {
 	if (mode)
 		return (letter);
 	return ('-');
 }
 
-static void print_origin_if_link(t_file *file, int is_link)
+static void	print_origin_if_link(t_file *file, int is_link)
 {
 	char		origin[PATH_MAX];
 	ssize_t		len;
@@ -37,25 +37,24 @@ static void print_origin_if_link(t_file *file, int is_link)
 	}
 }
 
-static void print_second_part(t_file *file, int max_len)
+static void	print_second_part(t_file *file, int max_len)
 {
-	struct stat	*stats;
-	char	byte_str_buf[LTOA_BUF_SIZE];
-	char	*time_str;
-    int        len;
+	struct stat			*stats;
+	char				byte_str_buf[LTOA_BUF_SIZE];
+	char				*time_str;
+	int					len;
 
 	stats = &file->stats;
-    time_str = ctime(&stats->st_mtime) + 4;
+	time_str = ctime(&stats->st_mtime) + 4;
 	time_str[12] = 0;
-    len = get_len(stats->st_size);
-    if (len > max_len)
-        max_len = len;
-    while (len++ < max_len)
-        ft_printf(" ");
-    ft_ltoa(stats->st_size, byte_str_buf);
-	ft_printf("%s", byte_str_buf);    
+	len = get_len(stats->st_size);
+	if (len > max_len)
+		max_len = len;
+	while (len++ < max_len)
+		ft_printf(" ");
+	ft_ltoa(stats->st_size, byte_str_buf);
+	ft_printf("%s", byte_str_buf);
 	ft_printf(" %s %s", time_str, file->name);
-    // free(time_str);
 }
 
 void	print_long(t_file *file, int max_len)

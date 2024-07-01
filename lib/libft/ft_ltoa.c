@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:54:08 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/01 18:18:42 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/02 03:06:43 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,18 @@ static	char	*reverse(char *str)
 
 static int	get_len(unsigned long long n)
 {
-    int	len;
+	int	len;
 
-    len = 0;
-    while (n)
-    {
-        n /= 10;
-        len++;
-    }
-    return (len);
+	len = 0;
+	while (n)
+	{
+		n /= 10;
+		len++;
+	}
+	return (len);
 }
 
-char    *ft_ltoa(unsigned long long n, char *buf)
+char	*ft_ltoa(unsigned long long n, char *buf)
 {
 	int					i;
 	int					len;

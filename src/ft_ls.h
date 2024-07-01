@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:45:54 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/02 02:55:54 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/02 03:05:34 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,6 @@
 # include <pwd.h>
 # include <grp.h>
 # include <time.h>
-
-# ifndef PATH_MAX
-
-# define PATH_MAX 4096
-
-# endif
-
-// #ifndef DT_DIR
-// # define DT_DIR 4
-// #endif
 
 typedef enum s_flags
 {

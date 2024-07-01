@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 22:12:06 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/25 04:20:48 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/02 03:07:20 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 typedef struct s_dlist
 {
-	char							*content;
+	char				*content;
 	struct s_dlist		*next;
 	struct s_dlist		*prev;
 }				t_dlist;

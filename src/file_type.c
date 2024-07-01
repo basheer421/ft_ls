@@ -6,13 +6,13 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 03:18:38 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/02 02:09:06 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/02 03:00:17 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void    destroy_file(void *file)
+void	destroy_file(void *file)
 {
 	if (!file)
 		return ;
@@ -23,15 +23,15 @@ void    destroy_file(void *file)
 
 int	has_recursion(t_file *file, int flags)
 {
-	char *name;
+	char	*name;
 
 	name = file->name;
 	if (!(S_ISDIR(file->stats.st_mode)))
 		return (0);
 	if (name[0] == '.')
 	{
-        if (!(flags & ALL))
-            return (0);
+		if (!(flags & ALL))
+			return (0);
 		if (name[1] == '\0')
 			return (0);
 		if (name[1] == '.' && name[2] == '\0')
@@ -40,7 +40,7 @@ int	has_recursion(t_file *file, int flags)
 	return (1);
 }
 
-char    *join_path(char *path, char *name)
+char	*join_path(char *path, char *name)
 {
 	char	*ret;
 	size_t	path_len;

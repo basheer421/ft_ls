@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 19:26:43 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/01 22:24:20 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/02 03:04:05 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ static t_list	*make_file(char *name)
 		file->name = "";
 	}
 	return (file_node);
+}
+
+static void	check_empty(t_list **files)
+{
+	if (*files == NULL)
+		*files = make_file(".");
 }
 
 int	parse(int argc, char **argv, t_ls_args *args)
@@ -53,9 +59,7 @@ int	parse(int argc, char **argv, t_ls_args *args)
 				ft_lstadd_back(&(args->files), make_file(argv[i]));
 		}
 	}
-	if (args->files == NULL)
-		args->files = make_file(".");
+	check_empty(&(args->files));
 	args->flags = flags;
-	sort_files(&(args->files), args->flags);
-	return (0);
+	return (sort_files(&(args->files), args->flags), 0);
 }
