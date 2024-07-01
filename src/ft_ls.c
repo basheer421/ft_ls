@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:48:57 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/02 02:58:04 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/02 03:09:52 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	main(int argc, char **argv)
 	t_settings	s;
 
 	ret = 0;
-	s = (t_settings){0, 0, 0};
+	s = (t_settings){0, 1, 0};
 	if (argc == 1)
 		return (ls(ft_strdup("."), 0, s));
 	if (parse(argc, argv, &args) < 0)
@@ -90,8 +90,7 @@ int	main(int argc, char **argv)
 		s.print_dir = (ft_lstsize(args.files) > 1)
 			|| (args.flags & RECURSIVE);
 		s.ret = ret;
-		ret = ls(ft_strdup(file_name),
-				args.flags, s);
+		ret = ls(ft_strdup(file_name), args.flags, s);
 		current = current->next;
 	}
 	return (ft_lstclear(&args.files, free), ret);
