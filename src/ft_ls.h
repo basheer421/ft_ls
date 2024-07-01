@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:45:54 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/02 03:05:34 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/02 03:18:19 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ unsigned int	get_total_blocks(t_list *files);
 int				handle_single_file(t_list *files,
 					int flags, int max_len, char *path);
 int				ls(char *path, int flags, t_settings s);
+void			rev(t_list **files);
 
 #endif

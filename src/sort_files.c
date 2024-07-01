@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 03:26:05 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/02 03:04:57 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/02 03:18:51 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,6 @@ void	sort_files(t_list **files, int flags)
 		ft_lstsort(files, compare_time);
 	else
 		ft_lstsort(files, compare_alpha);
+	if (flags & REVERSE)
+		rev(files);
 }
