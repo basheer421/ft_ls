@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 19:26:43 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/01 21:10:55 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/01 22:24:20 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static t_list	*make_file(char *name)
 	file->name = name;
 	if (lstat(name, &file->stats) == -1)
 	{
-		;
+		perror("ft_ls");
+		file->name = "";
 	}
 	return (file_node);
 }

@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:34:13 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/01 21:58:19 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/01 22:03:57 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void print_second_part(t_file *file, int max_len)
 	stats = &file->stats;
     time_str = ft_strtrim(ctime(&stats->st_mtime) + 4, "\n");
 	if (!time_str)
-		exit(8);
+		exit(EXIT_FAILURE);
     len = get_len(stats->st_size);
     if (len > max_len)
         max_len = len;
