@@ -6,33 +6,36 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 19:26:43 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/30 19:02:30 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/01 21:10:55 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void	add_dot_if_empty(t_ls_args *args)
+static t_list	*make_file(char *name)
 {
-	t_dlist	*dot;
+	t_list	*file_node;
+	t_file	*file;
 
-	if (args->files->head == NULL)
+	file_node = ft_lstnew(NULL);
+	file_node->content = ft_malloc(sizeof(t_file));
+	file = file_node->content;
+	file->name = name;
+	if (lstat(name, &file->stats) == -1)
 	{
-		dot = ft_dlstnew(ft_strdup("."));
-		if (!dot)
-			exit(EXIT_FAILURE);
-		ft_dqadd_last(args->files, dot);
+		;
 	}
+	return (file_node);
 }
 
 int	parse(int argc, char **argv, t_ls_args *args)
 {
 	int		i;
 	int		flags;
-	t_dlist	*file_node;
 
 	i = 0;
 	flags = 0;
+	args->files = NULL;
 	while (++i < argc)
 	{
 		if (argv[i][0] == '-')
@@ -43,14 +46,15 @@ int	parse(int argc, char **argv, t_ls_args *args)
 		}
 		else
 		{
-			file_node = ft_dlstnew(ft_strdup(argv[i]));
-			if (!file_node)
-				return (ft_putendl_fd("ft_ls: No memory", 2), -1);
-			ft_dqadd_last(args->files, file_node);
+			if (args->files == NULL)
+				args->files = make_file(argv[i]);
+			else
+				ft_lstadd_back(&(args->files), make_file(argv[i]));
 		}
 	}
-	sort_args(args);
-	add_dot_if_empty(args);
+	if (args->files == NULL)
+		args->files = make_file(".");
 	args->flags = flags;
+	sort_files(&(args->files), args->flags);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:45:54 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/01 18:59:37 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/01 21:56:41 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,15 @@ typedef enum s_flags
 
 typedef struct s_ls_args
 {
-	t_dq	*files;
-	int		flags;
+	t_list		*files;
+	int			flags;
 }	t_ls_args;
 
 typedef struct s_file
 {
 	char		*name;
 	struct stat	stats;
+	char		*full_path;
 }	t_file;
 
 int		parse_flags(char *arg);

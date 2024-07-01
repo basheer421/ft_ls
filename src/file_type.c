@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 03:18:38 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/01 18:35:33 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/01 21:57:44 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void    destroy_file(void *file)
 	if (!file)
 		return ;
 	free(((t_file *)file)->name);
+	free(((t_file *)file)->full_path);
 	free(file);
 }
 
@@ -44,7 +45,7 @@ char    *join_path(char *path, char *name)
 	name_len = ft_strlen(name);
 	ret = ft_malloc(path_len + name_len + 2);
 	if (!ret)
-		exit(EXIT_FAILURE);
+		exit(4);
 	ft_strlcpy(ret, path, path_len + 1);
 	ft_strlcpy(ret + path_len, "/", 2);
 	ft_strlcpy(ret + path_len + 1, name, name_len + 1);
