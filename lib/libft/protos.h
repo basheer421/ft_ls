@@ -6,12 +6,13 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 17:30:17 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/29 23:05:11 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/01 18:18:25 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PROTOS_H
 # define PROTOS_H
+# define LTOA_BUF_SIZE 20
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -25,6 +26,7 @@ int					ft_isascii(int c);
 int					ft_isdigit(int c);
 int					ft_isprint(int c);
 char				*ft_itoa(int n);
+char				*ft_ltoa(unsigned long long n, char *buf);
 void				*ft_memchr(const void *s, int c, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);

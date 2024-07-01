@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 03:18:38 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/30 03:24:24 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/01 18:35:33 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,23 @@ char    *join_path(char *path, char *name)
 	ft_strlcpy(ret + path_len, "/", 2);
 	ft_strlcpy(ret + path_len + 1, name, name_len + 1);
 	return (ret);
+}
+
+char	get_file_type(struct stat *stats)
+{
+	if (S_ISREG(stats->st_mode))
+		return ('-');
+	if (S_ISDIR(stats->st_mode))
+		return ('d');
+	if (S_ISCHR(stats->st_mode))
+		return ('c');
+	if (S_ISBLK(stats->st_mode))
+		return ('b');
+	if (S_ISFIFO(stats->st_mode))
+		return ('p');
+	if (S_ISLNK(stats->st_mode))
+		return ('l');
+	if (S_ISSOCK(stats->st_mode))
+		return ('s');
+	return ('-');
 }

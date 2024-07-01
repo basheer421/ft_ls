@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:45:54 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/30 19:53:23 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/01 18:59:37 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,9 @@ int 	has_recursion(char *name, int flags);
 char    *join_path(char *path, char *name);
 void	sort_files(t_list **files, int flags);
 void    sort_args(t_ls_args *args);
+char	get_file_type(struct stat *stats);
+void	print_long(t_file *file, int max_len);
+int		get_max_len(t_list *files);
+int 	get_len(long n);
 
 #endif

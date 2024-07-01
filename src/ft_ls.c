@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:48:57 by bammar            #+#    #+#             */
-/*   Updated: 2024/06/30 20:16:23 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/01 18:58:19 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,84 +59,13 @@ static t_list	*get_files(char *path)
 	return (ret);
 }
 
-char	get_file_type(struct stat *stats)
+
+void	print_file(t_file *file, int flags, int is_last, int max_len)
 {
-	if (S_ISREG(stats->st_mode))
-		return ('-');
-	if (S_ISDIR(stats->st_mode))
-		return ('d');
-	if (S_ISCHR(stats->st_mode))
-		return ('c');
-	if (S_ISBLK(stats->st_mode))
-		return ('b');
-	if (S_ISFIFO(stats->st_mode))
-		return ('p');
-	if (S_ISLNK(stats->st_mode))
-		return ('l');
-	if (S_ISSOCK(stats->st_mode))
-		return ('s');
-	return ('-');
-
-}
-
-char	get_mode(int mode, char letter)
-{
-	if (mode)
-		return (letter);
-	return ('-');
-}
-
-static void	print_origin_if_link(t_file *file, int is_link)
-{
-	char		origin[PATH_MAX];
-	ssize_t		len;
-
-	if (is_link)
-	{
-		len = readlink(file->name, origin, PATH_MAX);
-		if (len < 0)
-			exit(EXIT_FAILURE);
-		origin[len] = '\0';
-		ft_printf(" -> %s", origin);
-	}
-}
-
-void	print_long(t_file *file)
-{
-	struct stat	*stats;
-	char		*time_str;
-	char		file_type;
-
-	stats = &file->stats;
-	time_str = ft_strtrim(ctime(&stats->st_mtime) + 4, "\n");
-	if (!time_str)
-		exit(EXIT_FAILURE);
-	file_type = get_file_type(stats);
-	ft_printf("%c%c%c%c%c%c%c%c%c%c %d %s %s  %u %s %s",
-		file_type,
-		get_mode((stats->st_mode & S_IRUSR), 'r'),
-		get_mode((stats->st_mode & S_IWUSR), 'w'),
-		get_mode((stats->st_mode & S_IXUSR), 'x'),
-		get_mode((stats->st_mode & S_IRGRP), 'r'),
-		get_mode((stats->st_mode & S_IWGRP), 'w'),
-		get_mode((stats->st_mode & S_IXGRP), 'x'),
-		get_mode((stats->st_mode & S_IROTH), 'r'),
-		get_mode((stats->st_mode & S_IWOTH), 'w'),
-		get_mode((stats->st_mode & S_IXOTH), 'x'),
-		stats->st_nlink,
-		getpwuid(stats->st_uid)->pw_name, getgrgid(stats->st_gid)->gr_name,
-		(unsigned int)stats->st_size, time_str, file->name);
-	free(time_str);
-	print_origin_if_link(file, file_type == 'l');
-}
-
-void	print_file(t_file *file, int flags, int is_last)
-{
-
 	if (file->name[0] != '.' || (flags & ALL))
 	{
 		if (flags & LONG)
-			print_long(file);
+			print_long(file, max_len);
 		else
 			ft_printf("%s", file->name);
 	}
@@ -175,10 +104,12 @@ int	ls(char *path, int flags, int print_dir_name, int origin, int ret)
 	t_list	*files;
 	t_list	*current;
 	t_file	*file;
+	int		max_len;
 
 	files = get_files(path);
 	if (!files || ret)
-		ret = 1;
+		return (1);
+	max_len = get_max_len(files);
 	sort_files(&files, flags);
 	if (!origin && print_dir_name)
 		ft_printf("\n");
@@ -190,7 +121,7 @@ int	ls(char *path, int flags, int print_dir_name, int origin, int ret)
 	while (current)
 	{
 		file = current->content;
-		print_file(file, flags, !current->next);
+		print_file(file, flags, !current->next, max_len);
 		current = current->next;
 	}
 	if (flags & RECURSIVE)
