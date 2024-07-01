@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:48:57 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/01 23:27:56 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/01 23:33:41 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,10 @@ int	ls(char *path, int flags, int print_dir_name, int origin, int ret)
 	}
 	return (ft_lstclear(&files, destroy_file), free(path), ret);
 }
+
+
+// TODO: Fix -t with single files
+
 
 int	main(int argc, char **argv)
 {
