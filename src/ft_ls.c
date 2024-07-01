@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:48:57 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/01 22:25:29 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/01 22:28:55 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ int	main(int argc, char **argv)
 {
 	t_ls_args	args;
 	int			ret;
+	char		*file_name;
 
 	ret = 0;
 	if (argc == 1)
@@ -152,7 +153,8 @@ int	main(int argc, char **argv)
 		return (ft_lstclear(&args.files, free), 2);
 	t_list *current = args.files;
 	while (current) {
-		ret = ls(ft_strdup(((t_file *)current->content)->name),
+		file_name = ((t_file *)current->content)->name;
+		ret = ls(ft_strdup(file_name),
 			args.flags, ((ft_lstsize(args.files) > 1)
 			|| (args.flags & RECURSIVE)), current == args.files, ret);
 		current = current->next;
