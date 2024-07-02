@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:48:57 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/02 03:09:52 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/02 05:03:56 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	ls(char *path, int flags, t_settings s)
 	t_list		*current;
 	int			mlen;
 
+	files = NULL;
 	if (!init_ls(path, flags, &files, &mlen) \
 		|| handle_single_file(files, flags, mlen, path))
 		return (s.ret);
@@ -63,6 +64,7 @@ int	ls(char *path, int flags, t_settings s)
 		print_file(current->content, flags, !current->next, mlen);
 		current = current->next;
 	}
+	s.origin = 0;
 	if (flags & RECURSIVE)
 		recursion(files, &s, path, flags);
 	return (ft_lstclear(&files, destroy_file), free(path), s.ret);
@@ -86,9 +88,8 @@ int	main(int argc, char **argv)
 	while (current)
 	{
 		file_name = ((t_file *)current->content)->name;
-		s.origin = (ft_lstsize(args.files) > 1);
-		s.print_dir = (ft_lstsize(args.files) > 1)
-			|| (args.flags & RECURSIVE);
+		s.origin = ((ft_lstsize(args.files) > 1) || (args.flags & RECURSIVE));
+		s.print_dir = (ft_lstsize(args.files) > 1) || (args.flags & RECURSIVE);
 		s.ret = ret;
 		ret = ls(ft_strdup(file_name), args.flags, s);
 		current = current->next;
