@@ -53,18 +53,36 @@ static void	print_second_part(t_file *file, int max_len)
 	while (len++ < max_len)
 		ft_printf(" ");
 	ft_ltoa(stats->st_size, byte_str_buf);
-	ft_printf("%s", byte_str_buf);
+	ft_printf(" %s", byte_str_buf);
 	ft_printf(" %s %s", time_str, file->name);
 }
 
-void	print_long(t_file *file, int max_len)
+static void	print_first_part(t_file *file, int max_len)
+{
+	struct stat			*stats;
+	char				byte_str_buf[LTOA_BUF_SIZE];
+	int					len;
+
+	stats = &file->stats;
+	len = get_len(stats->st_nlink);
+	if (len > max_len)
+		max_len = len;
+	while (len++ < max_len)
+		ft_printf(" ");
+	ft_ltoa(stats->st_nlink, byte_str_buf);
+	ft_printf("%s", byte_str_buf);
+	ft_printf(" %s  %s ", getpwuid(stats->st_uid)->pw_name,
+		getgrgid(stats->st_gid)->gr_name);
+}
+
+void	print_long(t_file *file, int *max_len)
 {
 	struct stat	*stats;
 	char		file_type;
 
 	stats = &file->stats;
 	file_type = get_file_type(stats);
-	ft_printf("%c%c%c%c%c%c%c%c%c%c %d %s %s ",
+	ft_printf("%c%c%c%c%c%c%c%c%c%c  ",
 		file_type,
 		get_mode((stats->st_mode & S_IRUSR), 'r'),
 		get_mode((stats->st_mode & S_IWUSR), 'w'),
@@ -74,9 +92,8 @@ void	print_long(t_file *file, int max_len)
 		get_mode((stats->st_mode & S_IXGRP), 'x'),
 		get_mode((stats->st_mode & S_IROTH), 'r'),
 		get_mode((stats->st_mode & S_IWOTH), 'w'),
-		get_mode((stats->st_mode & S_IXOTH), 'x'),
-		stats->st_nlink,
-		getpwuid(stats->st_uid)->pw_name, getgrgid(stats->st_gid)->gr_name);
-	print_second_part(file, max_len);
+		get_mode((stats->st_mode & S_IXOTH), 'x'));
+	print_first_part(file, max_len[1]);
+	print_second_part(file, max_len[0]);
 	print_origin_if_link(file, file_type == 'l');
 }

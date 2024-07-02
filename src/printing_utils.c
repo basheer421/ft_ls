@@ -12,7 +12,7 @@
 
 #include "ft_ls.h"
 
-void	print_file(t_file *file, int flags, int is_last, int max_len)
+void	print_file(t_file *file, int flags, int is_last, int *max_len)
 {
 	if (file->name[0] != '.' || (flags & ALL))
 	{
@@ -61,7 +61,7 @@ static int	is_single_file(t_list *files)
 	return (0);
 }
 
-int	handle_single_file(t_list *files, int flags, int max_len, char *path)
+int	handle_single_file(t_list *files, int flags, int *max_len, char *path)
 {
 	t_file	*file;
 

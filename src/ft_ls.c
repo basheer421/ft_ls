@@ -17,7 +17,8 @@ static int	init_ls(char *path, int flags, t_list **files, int *max_len)
 	*files = get_files(path);
 	if (*files == NULL)
 		return (free(path), 0);
-	*max_len = get_max_len(*files);
+	max_len[0] = get_max_len(*files);
+	max_len[1] = get_max_len_links(*files);
 	sort_files(files, flags);
 	return (1);
 }
@@ -51,10 +52,10 @@ int	ls(char *path, int flags, t_settings s)
 {
 	t_list		*files;
 	t_list		*current;
-	int			mlen;
+	int			mlen[2];
 
 	files = NULL;
-	if (!init_ls(path, flags, &files, &mlen) \
+	if (!init_ls(path, flags, &files, mlen) \
 		|| handle_single_file(files, flags, mlen, path))
 		return (s.ret);
 	print_headers(files, path, flags, s);
@@ -89,7 +90,8 @@ int	main(int argc, char **argv)
 	{
 		file_name = ((t_file *)current->content)->name;
 		s.origin = ((ft_lstsize(args.files) > 1) || (args.flags & RECURSIVE));
-		s.print_dir = (ft_lstsize(args.files) > 1) || (args.flags & RECURSIVE);
+		s.print_dir = ((ft_lstsize(args.files) > 1)
+				|| (args.flags & RECURSIVE));
 		s.ret = ret;
 		ret = ls(ft_strdup(file_name), args.flags, s);
 		current = current->next;

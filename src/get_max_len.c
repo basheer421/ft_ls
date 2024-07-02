@@ -42,3 +42,21 @@ int	get_max_len(t_list *files)
 	}
 	return (max_len);
 }
+
+int	get_max_len_links(t_list *files)
+{
+	int		max_len;
+	int		len;
+	t_file	*file;
+
+	max_len = 0;
+	while (files)
+	{
+		file = files->content;
+		len = get_len(file->stats.st_nlink);
+		if (len > max_len)
+			max_len = len;
+		files = files->next;
+	}
+	return (max_len);
+}

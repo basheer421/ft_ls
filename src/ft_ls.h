@@ -59,14 +59,15 @@ int				has_recursion(t_file *file, int flags);
 char			*join_path(char *path, char *name);
 void			sort_files(t_list **files, int flags);
 char			get_file_type(struct stat *stats);
-void			print_long(t_file *file, int max_len);
+void			print_long(t_file *file, int *max_len);
 int				get_max_len(t_list *files);
+int				get_max_len_links(t_list *files);
 int				get_len(long n);
 t_list			*get_files(char *path);
-void			print_file(t_file *file, int flags, int is_last, int max_len);
+void			print_file(t_file *file, int flags, int is_last, int *max_len);
 unsigned int	get_total_blocks(t_list *files);
 int				handle_single_file(t_list *files,
-					int flags, int max_len, char *path);
+					int flags, int *max_len, char *path);
 int				ls(char *path, int flags, t_settings s);
 void			rev(t_list **files);
 
