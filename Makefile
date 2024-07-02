@@ -26,7 +26,7 @@ FILE_NAMES = $(addprefix $(FILES_DIR)/, $(FILES))
 
 CC = cc	
 
-CFLAGS = -Wall -Wextra -Werror -Ilib -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Ilib
 
 OBJS = $(FILE_NAMES:.c=.o)
 

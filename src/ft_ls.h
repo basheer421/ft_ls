@@ -65,7 +65,7 @@ int				get_max_len_links(t_list *files);
 int				get_len(long n);
 t_list			*get_files(char *path);
 void			print_file(t_file *file, int flags, int is_last, int *max_len);
-unsigned int	get_total_blocks(t_list *files);
+unsigned int	get_total_blocks(t_list *files, int flags);
 int				handle_single_file(t_list *files,
 					int flags, int *max_len, char *path);
 int				ls(char *path, int flags, t_settings s);

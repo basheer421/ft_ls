@@ -31,7 +31,7 @@ void	print_headers(t_list *files, char *path,
 	if (s.print_dir)
 		ft_printf("%s:\n", path);
 	if ((flags & LONG))
-		ft_printf("total %u\n", get_total_blocks(files));
+		ft_printf("total %u\n", get_total_blocks(files, flags));
 }
 
 void	recursion(t_list *files, t_settings *s, char *path, int flags)

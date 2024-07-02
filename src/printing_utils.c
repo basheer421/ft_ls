@@ -34,7 +34,7 @@ void	print_file(t_file *file, int flags, int is_last, int *max_len)
 	}
 }
 
-unsigned int	get_total_blocks(t_list *files)
+unsigned int	get_total_blocks(t_list *files, int flags)
 {
 	unsigned int	total;
 	t_list			*current;
@@ -45,7 +45,8 @@ unsigned int	get_total_blocks(t_list *files)
 	while (current)
 	{
 		file = current->content;
-		total += file->stats.st_blocks;
+		if (file->name[0] != '.' || flags & ALL)
+			total += file->stats.st_blocks;
 		current = current->next;
 	}
 	return (total / 2);
