@@ -49,6 +49,8 @@ unsigned int	get_total_blocks(t_list *files, int flags)
 			total += file->stats.st_blocks;
 		current = current->next;
 	}
+	if (BLOCK_SIZE == 1024)
+		return (total);
 	return (total / 2);
 }
 

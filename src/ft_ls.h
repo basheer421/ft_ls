@@ -52,6 +52,12 @@ typedef struct s_settings
 	int		ret;
 }	t_settings;
 
+# ifdef __APPLE__
+#  define BLOCK_SIZE 1024
+# else
+#  define BLOCK_SIZE 512
+# endif
+
 int				parse_flags(char *arg);
 int				parse(int argc, char **argv, t_ls_args *args);
 void			destroy_file(void *file);
