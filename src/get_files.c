@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 01:38:18 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/02 02:29:09 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/02 05:21:55 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ static t_list	*try_single_file(char *path)
 	file->name = ft_strdup(path);
 	if (!file->name)
 		exit(EXIT_FAILURE);
-	if (lstat(path, &file->stats) < 0)
-		exit(EXIT_FAILURE);
+	lstat(path, &file->stats);
 	file->full_path = ft_strdup(path);
 	if (!file->full_path)
 		exit(EXIT_FAILURE);
@@ -39,8 +38,7 @@ static t_file	*get_file(char *path, char *name)
 	if (!file->name)
 		exit(EXIT_FAILURE);
 	file->full_path = join_path(path, file->name);
-	if (lstat(file->full_path, &file->stats) < 0)
-		exit(EXIT_FAILURE);
+	lstat(file->full_path, &file->stats);
 	return (file);
 }
 

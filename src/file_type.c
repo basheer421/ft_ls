@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 03:18:38 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/02 03:00:17 by bammar           ###   ########.fr       */
+/*   Updated: 2024/07/02 05:21:20 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ char	*join_path(char *path, char *name)
 	path_len = ft_strlen(path);
 	name_len = ft_strlen(name);
 	ret = ft_malloc(path_len + name_len + 2);
-	if (!ret)
-		exit(EXIT_FAILURE);
 	ft_strlcpy(ret, path, path_len + 1);
 	ft_strlcpy(ret + path_len, "/", 2);
 	ft_strlcpy(ret + path_len + 1, name, name_len + 1);
