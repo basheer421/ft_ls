@@ -6,11 +6,33 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 03:26:05 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/02 03:18:51 by bammar           ###   ########.fr       */
+/*   Updated: 2024/10/20 16:27:35 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+static int	compare_alpha(void *a, void *b)
+{
+	return (ft_strcmp(((t_file *)a)->name, ((t_file *)b)->name));
+}
+
+static int	compare_time(void *a, void *b)
+{
+	t_file	*file_a;
+	t_file	*file_b;
+	long	time_a;
+	long	time_b;
+
+	file_a = (t_file *)a;
+	file_b = (t_file *)b;
+
+	time_a = (file_a->stats.st_mtimespec.tv_nsec);
+	time_b = (file_b->stats.st_mtimespec.tv_nsec);
+	if (time_a == time_b)
+		return (compare_alpha(a, b));
+	return (time_b - time_a);
+}
 
 // Selection sort.
 static void	ft_lstsort(t_list **files, int (*cmp)(void *, void *))
@@ -39,23 +61,6 @@ static void	ft_lstsort(t_list **files, int (*cmp)(void *, void *))
 		}
 		i = i->next;
 	}
-}
-
-static int	compare_alpha(void *a, void *b)
-{
-	return (ft_strcmp(((t_file *)a)->name, ((t_file *)b)->name));
-}
-
-static int	compare_time(void *a, void *b)
-{
-	t_file	*file_a;
-	t_file	*file_b;
-
-	file_a = (t_file *)a;
-	file_b = (t_file *)b;
-	if (file_a->stats.st_mtime == file_b->stats.st_mtime)
-		return (ft_strcmp(file_b->name, file_a->name));
-	return (file_b->stats.st_mtime - file_a->stats.st_mtime);
 }
 
 void	sort_files(t_list **files, int flags)
