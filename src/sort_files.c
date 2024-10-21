@@ -74,6 +74,8 @@ void	sort_files(t_list **files, int flags)
 		ft_lstsort(files, compare_time);
 	else
 		ft_lstsort(files, compare_alpha);
+	if (!(flags & ALL))
+
 	if (flags & REVERSE)
-		rev(files);
+		rev(files, (flags & ALL));
 }
