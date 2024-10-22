@@ -6,7 +6,7 @@
 #    By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/23 18:39:59 by bammar            #+#    #+#              #
-#    Updated: 2024/07/02 03:19:06 by bammar           ###   ########.fr        #
+#    Updated: 2024/10/22 16:35:04 by bammar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ FILE_NAMES = $(addprefix $(FILES_DIR)/, $(FILES))
 
 CC = cc	
 
-CFLAGS = -Wall -Wextra -Werror -Ilib
+CFLAGS = -Wall -Wextra -Werror -Ilib -std=c99
 
 OBJS = $(FILE_NAMES:.c=.o)
 
