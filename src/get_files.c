@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 01:38:18 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/02 05:21:55 by bammar           ###   ########.fr       */
+/*   Updated: 2024/10/22 23:53:50 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static t_file	*get_file(char *path, char *name)
 	return (file);
 }
 
-t_list	*get_files(char *path)
+t_list	*get_files(char *path, int flags)
 {
 	DIR				*dir;
 	struct dirent	*entry;
@@ -58,7 +58,8 @@ t_list	*get_files(char *path)
 	entry = readdir(dir);
 	while (entry)
 	{
-		ft_lstadd_back(&files, ft_lstnew(get_file(path, entry->d_name)));
+		if (!((flags & REVERSE) && entry->d_name[0] == '.'))
+			ft_lstadd_back(&files, ft_lstnew(get_file(path, entry->d_name)));
 		entry = readdir(dir);
 	}
 	closedir(dir);

@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 03:26:05 by bammar            #+#    #+#             */
-/*   Updated: 2024/10/22 16:35:57 by bammar           ###   ########.fr       */
+/*   Updated: 2024/10/22 23:56:52 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,35 +17,8 @@ static int	compare_alpha(void *a, void *b)
 	return (ft_strcmp(((t_file *)a)->name, ((t_file *)b)->name));
 }
 
-/**
- * to use on linux:
- * st_mtimespec.tv_sec st_mtime
- * st_mtimespec.tv_nsec st_mtimensec
- * 
- */
-// static int	compare_time(void *a, void *b)
-// {
-// 	t_file	*file_a;
-// 	t_file	*file_b;
-// 	time_t	time_a;
-// 	time_t	time_b;
-
-// 	file_a = (t_file *)a;
-// 	file_b = (t_file *)b;
-	
-// 	time_a = file_a->stats.st_mtimespec.tv_sec;
-// 	time_b = file_b->stats.st_mtimespec.tv_sec;
-// 	if (time_a == time_b)
-// 	{
-// 		time_a = file_a->stats.st_mtimespec.tv_nsec;
-// 		time_b = file_b->stats.st_mtimespec.tv_nsec;
-// 		if (time_a == time_b)
-// 			return (compare_alpha(a, b));
-// 		return (time_b - time_a);
-// 	}
-// 	return (time_b - time_a);
-// }
-
+// for mac use st_mtimespec.tv_sec and st_mtimespec.tv_nsec
+// for linux use st_mtime and st_mtimensec
 static int	compare_time(void *a, void *b)
 {
 	t_file	*file_a;
@@ -107,5 +80,5 @@ void	sort_files(t_list **files, int flags)
 	if (!(flags & ALL))
 
 	if (flags & REVERSE)
-		rev(files, (flags & ALL));
+		rev(files);
 }

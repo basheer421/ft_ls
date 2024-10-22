@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 03:48:57 by bammar            #+#    #+#             */
-/*   Updated: 2024/07/02 05:03:56 by bammar           ###   ########.fr       */
+/*   Updated: 2024/10/22 23:54:36 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	init_ls(char *path, int flags, t_list **files, int *max_len)
 {
-	*files = get_files(path);
+	*files = get_files(path, flags);
 	if (*files == NULL)
 		return (free(path), 0);
 	max_len[0] = get_max_len(*files);
