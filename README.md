@@ -48,7 +48,3 @@ All code is written in C, ensuring it runs efficiently on Unix-based systems.
 This version of ft_ls only implements a subset of the flags available in the real ls command (-l, -R, -a, -r, -t).
 The command does not handle all edge cases that the actual ls would, such as advanced file types or unusual filesystem structures.
 
-
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.
-
