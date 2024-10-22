@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 03:26:05 by bammar            #+#    #+#             */
-/*   Updated: 2024/10/22 23:56:52 by bammar           ###   ########.fr       */
+/*   Updated: 2024/10/23 00:05:23 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static int	compare_time(void *a, void *b)
 
 	file_a = (t_file *)a;
 	file_b = (t_file *)b;
-	
 	time_a = file_a->stats.st_mtime;
 	time_b = file_b->stats.st_mtime;
 	if (time_a == time_b)
@@ -77,8 +76,6 @@ void	sort_files(t_list **files, int flags)
 		ft_lstsort(files, compare_time);
 	else
 		ft_lstsort(files, compare_alpha);
-	if (!(flags & ALL))
-
 	if (flags & REVERSE)
 		rev(files);
 }

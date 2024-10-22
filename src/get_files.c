@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 01:38:18 by bammar            #+#    #+#             */
-/*   Updated: 2024/10/22 23:53:50 by bammar           ###   ########.fr       */
+/*   Updated: 2024/10/23 00:14:20 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_list	*get_files(char *path, int flags)
 	entry = readdir(dir);
 	while (entry)
 	{
-		if (!((flags & REVERSE) && entry->d_name[0] == '.'))
+		if ((flags & ALL) || entry->d_name[0] != '.')
 			ft_lstadd_back(&files, ft_lstnew(get_file(path, entry->d_name)));
 		entry = readdir(dir);
 	}
